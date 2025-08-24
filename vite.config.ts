@@ -1,11 +1,15 @@
 import { sveltekit } from '@sveltejs/kit/vite';
 import { defineConfig } from 'vite';
+import legacy from '@vitejs/plugin-legacy';
 import dotenv from 'dotenv';
 
 dotenv.config();
 
 export default defineConfig({
-	plugins: [sveltekit()],
+	plugins: [sveltekit(), legacy({
+		targets: ['defaults', 'not IE 11', 'iOS >= 12', 'Safari >= 12'],
+		additionalLegacyPolyfills: ['regenerator-runtime/runtime']
+	})],
 	build: {
 		// increase chunk size because of maplibre-gl
 		chunkSizeWarningLimit: 1000
